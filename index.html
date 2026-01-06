@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<title>Web FNAF</title>
+<style>
+body {
+  margin: 0;
+  background: #000;
+  color: #0f0;
+  font-family: monospace;
+}
+#office {
+  width: 100vw;
+  height: 100vh;
+  background: #111;
+  position: relative;
+}
+.door {
+  position: absolute;
+  top: 0;
+  width: 120px;
+  height: 100%;
+  background: #333;
+  transform: translateY(-100%);
+  transition: 0.4s;
+}
+#leftDoor { left: 0; }
+#rightDoor { right: 0; }
+
+.door.closed {
+  transform: translateY(0);
+}
+
+button {
+  position: absolute;
+  bottom: 20px;
+  padding: 10px;
+}
+#leftBtn { left: 20px; }
+#rightBtn { right: 20px; }
+
+#energy {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+}
+#cameraBtn {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+#camera {
+  display: none;
+  position: absolute;
+  inset: 0;
+  background: #020;
+  text-align: center;
+  padding-top: 40px;
+}
+</style>
+</head>
+<body>
+
+<div id="office">
+  <div id="leftDoor" class="door"></div>
+  <div id="rightDoor" class="door"></div>
+
+  <div id="energy">Enerji: <span id="power">100</span>%</div>
+
+  <button id="leftBtn">Sol Kapı</button>
+  <button id="rightBtn">Sağ Kapı</button>
+  <button id="cameraBtn">Kameralar</button>
+
+  <div id="camera">
+    <h2>KAMERA MODU</h2>
+    <p>Animatronik izleniyor...</p>
+    <button onclick="toggleCamera()">Ofise Dön</button>
+  </div>
+</div>
+
+<script>
+let power = 100;
+let leftClosed = false;
+let rightClosed = false;
+let cameraOpen = false;
+
+const powerEl = document.getElementById("power");
+
+function drain() {
+  let use = 1;
+  if (leftClosed) use++;
+  if (rightClosed) use++;
+  if (cameraOpen) use++;
+  power -= use;
+  if (power <= 0) gameOver();
+  powerEl.textContent = power;
+}
+
+setInterval(drain, 1000);
+
+document.getElementById("leftBtn").onclick = () => {
+  leftClosed = !leftClosed;
+  document.getElementById("leftDoor").classList.toggle("closed");
+};
+
+document.getElementById("rightBtn").onclick = () => {
+  rightClosed = !rightClosed;
+  document.getElementById("rightDoor").classList.toggle("closed");
+};
+
+document.getElementById("cameraBtn").onclick = toggleCamera;
+
+function toggleCamera() {
+  cameraOpen = !cameraOpen;
+  document.getElementById("camera").style.display =
+    cameraOpen ? "block" : "none";
+}
+
+function gameOver() {
+  alert("ENERJİ BİTTİ! GAME OVER");
+  location.reload();
+}
+</script>
+
+</body>
+</html>
