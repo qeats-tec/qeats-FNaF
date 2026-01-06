@@ -6,25 +6,31 @@
 <style>
 body {
   margin: 0;
-  background: #000;
-  color: #0f0;
+  background: black;
   font-family: monospace;
+  color: #0f0;
+  overflow: hidden;
 }
+
 #office {
   width: 100vw;
   height: 100vh;
-  background: #111;
   position: relative;
+  background: url("office.jpg") center/cover no-repeat;
 }
+
+/* KAPILAR */
 .door {
   position: absolute;
   top: 0;
-  width: 120px;
+  width: 140px;
   height: 100%;
-  background: #333;
+  background: rgba(0,0,0,0.8);
   transform: translateY(-100%);
   transition: 0.4s;
+  z-index: 5;
 }
+
 #leftDoor { left: 0; }
 #rightDoor { right: 0; }
 
@@ -32,25 +38,34 @@ body {
   transform: translateY(0);
 }
 
+/* UI */
 button {
   position: absolute;
   bottom: 20px;
   padding: 10px;
+  background: #111;
+  color: #0f0;
+  border: 1px solid #0f0;
+  cursor: pointer;
+  z-index: 10;
 }
+
 #leftBtn { left: 20px; }
 #rightBtn { right: 20px; }
+
+#cameraBtn {
+  left: 50%;
+  transform: translateX(-50%);
+}
 
 #energy {
   position: absolute;
   top: 10px;
   left: 10px;
+  z-index: 10;
 }
-#cameraBtn {
-  position: absolute;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-}
+
+/* KAMERA */
 #camera {
   display: none;
   position: absolute;
@@ -58,26 +73,29 @@ button {
   background: #020;
   text-align: center;
   padding-top: 40px;
+  z-index: 20;
 }
 </style>
 </head>
 <body>
 
 <div id="office">
-  <div id="leftDoor" class="door"></div>
-  <div id="rightDoor" class="door"></div>
 
   <div id="energy">Enerji: <span id="power">100</span>%</div>
+
+  <div id="leftDoor" class="door"></div>
+  <div id="rightDoor" class="door"></div>
 
   <button id="leftBtn">Sol Kapı</button>
   <button id="rightBtn">Sağ Kapı</button>
   <button id="cameraBtn">Kameralar</button>
 
   <div id="camera">
-    <h2>KAMERA MODU</h2>
-    <p>Animatronik izleniyor...</p>
+    <h2>KAMERA 1A</h2>
+    <p>Koridor boş...</p>
     <button onclick="toggleCamera()">Ofise Dön</button>
   </div>
+
 </div>
 
 <script>
