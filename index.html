@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Web FNAF</title>
+
 <style>
 body {
   margin: 0;
@@ -15,8 +16,8 @@ body {
 #office {
   width: 100vw;
   height: 100vh;
+  background: url("office.png") center/cover no-repeat;
   position: relative;
-  background: url("office.jpg") center/cover no-repeat;
 }
 
 /* KAPILAR */
@@ -25,18 +26,14 @@ body {
   top: 0;
   width: 140px;
   height: 100%;
-  background: rgba(0,0,0,0.8);
+  background: rgba(0,0,0,0.85);
   transform: translateY(-100%);
   transition: 0.4s;
   z-index: 5;
 }
-
 #leftDoor { left: 0; }
 #rightDoor { right: 0; }
-
-.door.closed {
-  transform: translateY(0);
-}
+.door.closed { transform: translateY(0); }
 
 /* UI */
 button {
@@ -52,7 +49,6 @@ button {
 
 #leftBtn { left: 20px; }
 #rightBtn { right: 20px; }
-
 #cameraBtn {
   left: 50%;
   transform: translateX(-50%);
@@ -70,13 +66,25 @@ button {
   display: none;
   position: absolute;
   inset: 0;
-  background: #020;
-  text-align: center;
-  padding-top: 40px;
+  background: black;
   z-index: 20;
+}
+
+#camImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+#camUI {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
 }
 </style>
 </head>
+
 <body>
 
 <div id="office">
@@ -91,9 +99,12 @@ button {
   <button id="cameraBtn">Kameralar</button>
 
   <div id="camera">
-    <h2>KAMERA 1A</h2>
-    <p>Koridor boş...</p>
-    <button onclick="toggleCamera()">Ofise Dön</button>
+    <img id="camImage" src="cam1a.png">
+    <div id="camUI">
+      <button onclick="setCam('cam1a.png')">CAM 1A</button>
+      <button onclick="setCam('cam1b.png')">CAM 1B</button>
+      <button onclick="toggleCamera()">Ofise Dön</button>
+    </div>
   </div>
 
 </div>
@@ -106,17 +117,15 @@ let cameraOpen = false;
 
 const powerEl = document.getElementById("power");
 
-function drain() {
+setInterval(() => {
   let use = 1;
   if (leftClosed) use++;
   if (rightClosed) use++;
   if (cameraOpen) use++;
   power -= use;
-  if (power <= 0) gameOver();
   powerEl.textContent = power;
-}
-
-setInterval(drain, 1000);
+  if (power <= 0) gameOver();
+}, 1000);
 
 document.getElementById("leftBtn").onclick = () => {
   leftClosed = !leftClosed;
@@ -136,8 +145,12 @@ function toggleCamera() {
     cameraOpen ? "block" : "none";
 }
 
+function setCam(img) {
+  document.getElementById("camImage").src = img;
+}
+
 function gameOver() {
-  alert("ENERJİ BİTTİ! GAME OVER");
+  alert("ENERJİ BİTTİ!");
   location.reload();
 }
 </script>
